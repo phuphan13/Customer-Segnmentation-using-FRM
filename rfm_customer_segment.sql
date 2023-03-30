@@ -18,11 +18,12 @@ create table segmentation (
     monetary_f int, monetary_t int
     );
 
-insert into segmentation values ('Best Customers','Bought most recently, often and spend most',                  3,3,3,3,3,3)
-insert into segmentation values ('Loyal Customers','Not always spend the most, frequently but always come back', 1,2,3,3,1,3)
-insert into segmentation values ('Potential Customers','Not purchase often but biggest spenders',                1,2,1,3,3,3)
-insert into segmentation values ('New Customers','Bought more recently, but not often',                          3,3,1,3,1,3)
-insert into segmentation values ('At Risk', 'Spent big money, purchased often but long time ago',                1,1,1,2,1,2)
+insert into segmentation values ('Champion','Purchased most recently, often and spend most',                     3,3,2,3,2,3)
+insert into segmentation values ('Loyal Customer','Not always spend the most, frequently but always come back',  2,2,3,3,2,3)
+insert into segmentation values ('Potential Loyalist','Not purchase often but biggest spenders',                 1,2,1,2,3,3)
+insert into segmentation values ('New Customers','Bought more recently, but not often',                          3,3,1,1,1,3)
+insert into segmentation values ('Promising','Made recent purchases, but not much',                              2,2,1,2,1,2)
+insert into segmentation values ('At Risk', 'Spent big money, purchased often but long time ago',                1,1,1,1,2,3)
 insert into segmentation values ('Lost Customers','Lowest recency, frequency & monetary scores',                 1,1,1,1,1,1)
 
 /*
@@ -50,13 +51,12 @@ as                (
 /* Creating rfm score table using ntile (could be quartile, quintile or percentile) metric */
 rfm_scores (custid, recency, frequency, monetary, r_score, f_score, m_score) 
 as (  
-    select custid, frequency, recency, monetary,
+    select custid, recency, frequency, monetary,
             r_score  = NTILE(3) over (order by recency DESC),
             f_score  = NTILE(3) over (order by frequency ASC),
             m_score  = NTILE(3) over (order by monetary ASC)
 from rfm_customer
 ),
-
 
 /* Linking rfm score with the segmentation */
 rfm_final 
@@ -91,8 +91,8 @@ as                (
 rfm_scores (country, recency, frequency, monetary, r_score, f_score, m_score) 
 as (  
     select country, recency, frequency, monetary,
-            r_score  = NTILE(3) over (order by recency ASC),
-            f_score  = NTILE(3) over (order by frequency DESC),
+            r_score  = NTILE(3) over (order by recency DESC),
+            f_score  = NTILE(3) over (order by frequency ASC),
             m_score  = NTILE(3) over (order by monetary ASC)
 from rfm_country
 ),
@@ -110,4 +110,5 @@ on (t1.r_score between t2.recency_f and t2.recency_t) AND
    (t1.f_score between t2.frequency_f and t2.frequency_t) AND
    (t1.m_score between t2.monetary_f and t2.monetary_t);
 
+select * from rfm_country_analysis;
 
