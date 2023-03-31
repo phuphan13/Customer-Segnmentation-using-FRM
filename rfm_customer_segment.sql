@@ -13,9 +13,12 @@ drop table if exists rfm_country_analysis;
 create table segmentation (
     segment nvarchar(20),
     segment_desc nvarchar(100),
-    recency_f int, recency_t int,
-    frequency_f int, frequency_t int,
-    monetary_f int, monetary_t int
+    recency_f int, 
+    recency_t int,
+    frequency_f int, 
+    frequency_t int,
+    monetary_f int, 
+    monetary_t int
     );
 
 insert into segmentation values ('Champion','Purchased most recently, often and spend most',                     3,3,2,3,2,3)
@@ -23,7 +26,7 @@ insert into segmentation values ('Loyal Customer','Not always spend the most, fr
 insert into segmentation values ('Potential Loyalist','Not purchase often but biggest spenders',                 1,2,1,2,3,3)
 insert into segmentation values ('New Customers','Bought more recently, but not often',                          3,3,1,1,1,3)
 insert into segmentation values ('Promising','Made recent purchases, but not much',                              2,2,1,2,1,2)
-insert into segmentation values ('At Risk', 'Spent big money, purchased often but long time ago',                1,1,1,1,2,3)
+insert into segmentation values ('At Risk', 'Spent big money, purchased often but long time ago',                1,1,2,3,2,3)
 insert into segmentation values ('Lost Customers','Lowest recency, frequency & monetary scores',                 1,1,1,1,1,1)
 
 /*
@@ -65,7 +68,7 @@ from rfm_customer
 /* Linking rfm score with the segmentation */
 rfm_final 
 as (
-    select *, CONCAT(r_score,f_score,m_score) as rfm_score from rfm_scores)
+    select *, (r_score * 100 + f_score * 10 + m_score) as rfm_score from rfm_scores)
 
 
 /* Main query */
@@ -105,7 +108,7 @@ from rfm_country
 /* Linking rfm score with the segment */
 rfm_final 
 as (
-    select *, CONCAT(r_score,f_score,m_score) as rfm_score from rfm_scores)
+    select *, (r_score * 100 + f_score * 10 + m_score)  as rfm_score from rfm_scores)
 
 /* Main query */
 select t1.*, ISNULL(t2.segment,'Others') as 'segment'
