@@ -26,7 +26,7 @@ insert into segmentation values ('Loyal Customer','Not always spend the most, fr
 insert into segmentation values ('Potential Loyalist','Not purchase often but biggest spenders',                 1,2,1,2,3,3)
 insert into segmentation values ('New Customers','Bought more recently, but not often',                          3,3,1,1,1,3)
 insert into segmentation values ('Promising','Made recent purchases, but not much',                              2,2,1,2,1,2)
-insert into segmentation values ('At Risk', 'Spent big money, purchased often but long time ago',                1,1,2,3,2,3)
+insert into segmentation values ('At Risk', 'Spent big money, purchased often but long time ago',                1,1,1,3,2,2)
 insert into segmentation values ('Lost Customers','Lowest recency, frequency & monetary scores',                 1,1,1,1,1,1)
 
 /*
