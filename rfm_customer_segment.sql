@@ -13,21 +13,18 @@ drop table if exists rfm_country_analysis;
 create table segmentation (
     segment nvarchar(20),
     segment_desc nvarchar(100),
-    recency_f int, 
-    recency_t int,
-    frequency_f int, 
-    frequency_t int,
-    monetary_f int, 
-    monetary_t int
+    recency_f int, recency_t int,
+    frequency_f int, frequency_t int,
+    monetary_f int, monetary_t int
     );
 
-insert into segmentation values ('Champion','Purchased most recently, often and spend most',                     3,3,2,3,2,3)
-insert into segmentation values ('Loyal Customer','Not always spend the most, frequently but always come back',  2,2,3,3,2,3)
-insert into segmentation values ('Potential Loyalist','Not purchase often but biggest spenders',                 1,2,1,2,3,3)
-insert into segmentation values ('New Customers','Bought more recently, but not often',                          3,3,1,1,1,3)
-insert into segmentation values ('Promising','Made recent purchases, but not much',                              2,2,1,2,1,2)
-insert into segmentation values ('At Risk', 'Spent big money, purchased often but long time ago',                1,1,1,3,2,2)
-insert into segmentation values ('Lost Customers','Lowest recency, frequency & monetary scores',                 1,1,1,1,1,1)
+insert into segmentation values ('Champion','Purchased most recently, often and spend most',3,3,2,3,2,3),
+                                ('Loyal Customer','Not always spend the most, frequently but always come back',2,2,3,3,2,3),
+                                ('Potential Loyalist','Not purchase often but biggest spenders',1,2,1,2,3,3),
+                                ('New Customers','Bought more recently, but not often',3,3,1,1,1,3),
+                                ('Promising','Made recent purchases, but not much',2,2,1,2,1,2),
+                                ('At Risk', 'Spent big money, purchased often but long time ago',1,1,1,3,2,2),
+                                ('Lost Customers','Lowest recency, frequency & monetary scores',1,1,1,1,1,1);
 
 /*
     CREATING RFM SCORE TO SEGMENT DATA BY CUSTOMERS 
